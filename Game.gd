@@ -20,8 +20,19 @@ func _ready():
 	#displays life
 	displayLife()
 	
+	newStage()
 	
 	pass # Replace with function body.
+
+#calls on new game, refreshes the pickups and level++
+func newStage():
+	#remask reshow pickups
+	var pickUps = get_tree().get_nodes_in_group("pickUp")
+	for i in pickUps:
+		i.visible = true
+		i.get_node("Area2D").set_collision_layer_bit(0,1)
+		i.get_node("Area2D").set_collision_mask_bit(0,1)
+	#get_node("GhostSpawn").position
 
 #called when touched by ghost, reset positions if have life
 func resetStage():
@@ -41,6 +52,7 @@ func resetStage():
 		for i in ghosts:
 			i.position = ghostLoc
 		#get_node("GhostSpawn").position
+		
 		
 		#reposition Player
 		var playerLoc = get_node("PlayerSpawn").position

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Ghost.gd" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
@@ -14,8 +14,11 @@ animations = [ {
 [sub_resource type="CircleShape2D" id=2]
 radius = 30.0315
 
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 33.7204, 33.2272 )
+
 [sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 32.8123, 33.0131 )
+extents = Vector2( 90.2254, 33.0131 )
 
 [node name="Ghost" type="KinematicBody2D" groups=[
 "Ghost",
@@ -32,9 +35,24 @@ shape = SubResource( 2 )
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 4 )
+
+[node name="chasearea1" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="chasearea1"]
+shape = SubResource( 3 )
+
+[node name="chasearea2" type="Area2D" parent="."]
+rotation = 1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="chasearea2"]
 shape = SubResource( 3 )
 
 [node name="EscapeTimer" type="Timer" parent="."]
 wait_time = 1.5
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="body_entered" from="chasearea1" to="." method="_on_chasearea1_body_entered"]
+[connection signal="body_exited" from="chasearea1" to="." method="_on_chasearea1_body_exited"]
+[connection signal="body_entered" from="chasearea2" to="." method="_on_chasearea2_body_entered"]
+[connection signal="body_exited" from="chasearea2" to="." method="_on_chasearea2_body_exited"]
 [connection signal="timeout" from="EscapeTimer" to="." method="_on_EscapeTimer_timeout"]

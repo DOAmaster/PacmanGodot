@@ -19,7 +19,10 @@ func _ready():
 func _on_Area2D_body_entered(body):
 	if body.is_in_group("Player"):
 		#print("pickup")
-		var tempScore = MyGlobals.score + 50
+		var tempScore = MyGlobals.score + 10
 		MyGlobals.score = tempScore
-		queue_free()
+		self.visible = false
+		$Area2D.set_collision_layer_bit(0,0)
+		$Area2D.set_collision_mask_bit(0,0)
+		#queue_free()
 	pass # Replace with function body.
