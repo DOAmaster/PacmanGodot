@@ -20,8 +20,6 @@ func _ready():
 	#displays life
 	displayLife()
 	
-	
-	
 	newStage()
 	
 	pass # Replace with function body.
@@ -37,7 +35,9 @@ func checkWin():
 		var tempLevel = MyGlobals.level + 1
 		MyGlobals.level = tempLevel
 		print("stage win")
-		resetStage2()
+		resetStage()
+		#i.get_node("Area2D").set_collision_layer_bit(0,1)
+		#i.get_node("Area2D").set_collision_mask_bit(0,1)
 	pass
 
 #calls on new game, refreshes the pickups and level++
@@ -49,25 +49,6 @@ func newStage():
 		i.get_node("Area2D").set_collision_layer_bit(0,1)
 		i.get_node("Area2D").set_collision_mask_bit(0,1)
 	#get_node("GhostSpawn").position
-
-#called when stage won
-func resetStage2():
-		#reposition Player
-		var playerLoc = get_node("PlayerSpawn").position
-		get_node("Player").position = playerLoc
-		get_node("Player").lastDir = ""
-		
-		#repositions ghosts
-		var ghostLoc = get_node("GhostSpawn").position
-		var ghosts = get_tree().get_nodes_in_group("Ghost")
-		for i in ghosts:
-			i.position = ghostLoc
-		#get_node("GhostSpawn").position
-		
-		#refresh pickUps twice, sloppy fix for spawning missing pickup bug
-		newStage()
-		$PickupTimer.start()
-
 
 #called when touched by ghost, reset positions if have life
 func resetStage():
@@ -163,9 +144,4 @@ func _on_Area2D_body_entered(body):
 
 func _on_ReplayButton_pressed():
 	get_tree().change_scene("res://Game.tscn")
-	pass # Replace with function body.
-
-
-func _on_PickupTimer_timeout():
-	newStage()
 	pass # Replace with function body.

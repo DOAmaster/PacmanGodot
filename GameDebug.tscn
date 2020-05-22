@@ -266,132 +266,6 @@ position = Vector2( 176, 562 )
 [node name="pickUp26" parent="." instance=ExtResource( 6 )]
 position = Vector2( 176, 530 )
 
-[node name="pickUp2" parent="." instance=ExtResource( 6 )]
-position = Vector2( 144, 498 )
-
-[node name="pickUp3" parent="." instance=ExtResource( 6 )]
-position = Vector2( 112, 498 )
-
-[node name="pickUp4" parent="." instance=ExtResource( 6 )]
-position = Vector2( 80, 498 )
-
-[node name="pickUp9" parent="." instance=ExtResource( 6 )]
-position = Vector2( 304, 498 )
-
-[node name="pickUp10" parent="." instance=ExtResource( 6 )]
-position = Vector2( 336, 498 )
-
-[node name="pickUp43" parent="." instance=ExtResource( 6 )]
-position = Vector2( 112, 562 )
-
-[node name="pickUp42" parent="." instance=ExtResource( 6 )]
-position = Vector2( 80, 562 )
-
-[node name="pickUp41" parent="." instance=ExtResource( 6 )]
-position = Vector2( 304, 562 )
-
-[node name="pickUp40" parent="." instance=ExtResource( 6 )]
-position = Vector2( 336, 562 )
-
-[node name="pickUp45" parent="." instance=ExtResource( 6 )]
-position = Vector2( 368, 562 )
-
-[node name="pickUp25" parent="." instance=ExtResource( 6 )]
-position = Vector2( 336, 530 )
-
-[node name="pickUp8" parent="." instance=ExtResource( 6 )]
-position = Vector2( 272, 498 )
-
-[node name="pickUp7" parent="." instance=ExtResource( 6 )]
-position = Vector2( 240, 498 )
-
-[node name="pickUp6" parent="." instance=ExtResource( 6 )]
-position = Vector2( 208, 498 )
-
-[node name="pickUp5" parent="." instance=ExtResource( 6 )]
-position = Vector2( 48, 498 )
-
-[node name="pickUp39" parent="." instance=ExtResource( 6 )]
-position = Vector2( 272, 562 )
-
-[node name="pickUp38" parent="." instance=ExtResource( 6 )]
-position = Vector2( 240, 562 )
-
-[node name="pickUp37" parent="." instance=ExtResource( 6 )]
-position = Vector2( 208, 562 )
-
-[node name="pickUp36" parent="." instance=ExtResource( 6 )]
-position = Vector2( 48, 562 )
-
-[node name="pickUp24" parent="." instance=ExtResource( 6 )]
-position = Vector2( 48, 530 )
-
-[node name="pickUp20" parent="." instance=ExtResource( 6 )]
-position = Vector2( 528, 498 )
-
-[node name="pickUp19" parent="." instance=ExtResource( 6 )]
-position = Vector2( 496, 498 )
-
-[node name="pickUp18" parent="." instance=ExtResource( 6 )]
-position = Vector2( 464, 498 )
-
-[node name="pickUp17" parent="." instance=ExtResource( 6 )]
-position = Vector2( 432, 498 )
-
-[node name="pickUp16" parent="." instance=ExtResource( 6 )]
-position = Vector2( 656, 498 )
-
-[node name="pickUp15" parent="." instance=ExtResource( 6 )]
-position = Vector2( 688, 498 )
-
-[node name="pickUp35" parent="." instance=ExtResource( 6 )]
-position = Vector2( 528, 562 )
-
-[node name="pickUp34" parent="." instance=ExtResource( 6 )]
-position = Vector2( 496, 562 )
-
-[node name="pickUp33" parent="." instance=ExtResource( 6 )]
-position = Vector2( 464, 562 )
-
-[node name="pickUp32" parent="." instance=ExtResource( 6 )]
-position = Vector2( 432, 562 )
-
-[node name="pickUp31" parent="." instance=ExtResource( 6 )]
-position = Vector2( 656, 562 )
-
-[node name="pickUp30" parent="." instance=ExtResource( 6 )]
-position = Vector2( 688, 562 )
-
-[node name="pickUp23" parent="." instance=ExtResource( 6 )]
-position = Vector2( 688, 530 )
-
-[node name="pickUp14" parent="." instance=ExtResource( 6 )]
-position = Vector2( 624, 498 )
-
-[node name="pickUp29" parent="." instance=ExtResource( 6 )]
-position = Vector2( 624, 562 )
-
-[node name="pickUp13" parent="." instance=ExtResource( 6 )]
-position = Vector2( 592, 498 )
-
-[node name="pickUp12" parent="." instance=ExtResource( 6 )]
-position = Vector2( 560, 498 )
-
-[node name="pickUp11" parent="." instance=ExtResource( 6 )]
-position = Vector2( 400, 498 )
-
-[node name="pickUp28" parent="." instance=ExtResource( 6 )]
-position = Vector2( 560, 562 )
-
-[node name="pickUp27" parent="." instance=ExtResource( 6 )]
-position = Vector2( 400, 562 )
-
-[node name="pickUp22" parent="." instance=ExtResource( 6 )]
-position = Vector2( 560, 530 )
-
-[node name="pickUp21" parent="." instance=ExtResource( 6 )]
-position = Vector2( 400, 530 )
-
 [node name="Ghost" parent="." instance=ExtResource( 8 )]
 position = Vector2( 368, 272 )
 collision_mask = 0
@@ -433,7 +307,12 @@ margin_right = 231.0
 margin_bottom = 160.0
 custom_fonts/font = SubResource( 12 )
 text = "REPLAY"
+
+[node name="PickupTimer" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
 [connection signal="body_entered" from="GhostCage" to="." method="_on_GhostCage_body_entered"]
 [connection signal="body_exited" from="GhostCage" to="." method="_on_GhostCage_body_exited"]
 [connection signal="pressed" from="GameOverText/ReplayButton" to="." method="_on_ReplayButton_pressed"]
+[connection signal="timeout" from="PickupTimer" to="." method="_on_PickupTimer_timeout"]

@@ -24,5 +24,9 @@ func _on_Area2D_body_entered(body):
 		self.visible = false
 		$Area2D.set_collision_layer_bit(0,0)
 		$Area2D.set_collision_mask_bit(0,0)
+		
+		#body.set_collision_mask_bit(0,0)
+		#body.set_collision_layer_bit(0,0)
+		get_parent().checkWin()
 		#queue_free()
 	pass # Replace with function body.

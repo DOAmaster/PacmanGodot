@@ -9,6 +9,7 @@ var gameOver = 0
 var lifes = 3
 var level = 1
 
+
 var pickupCount = 10
 
 
