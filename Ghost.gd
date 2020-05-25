@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 export (int) var speed = 50
+var slowSpeed = 25
 var rng = RandomNumberGenerator.new()
 
 var isMoving = 0
@@ -50,7 +51,10 @@ func get_direction():
 		isMoving = 1
 		lastDir = "up"
 		velocity.y -= 1
-	velocity = velocity.normalized() * speed
+	if(!MyGlobals.powerUpActive):
+		velocity = velocity.normalized() * speed
+	else:
+		velocity = velocity.normalized() * slowSpeed
 
 func moveUp():
 	$EscapeTimer.start()
@@ -70,14 +74,20 @@ func _physics_process(delta):
 		get_direction()
 	#make ghost focus player position, TODO wall check
 	if(chasing && !isCaged):
-		velocity = (player.position - self.position).normalized() * speed
+		if(!MyGlobals.powerUpActive):
+			velocity = velocity.normalized() * speed
+		else:
+			velocity = velocity.normalized() * slowSpeed
 	velocity = move_and_slide(velocity)
 
 
 func _on_Area2D_body_entered(body):
 	if body.is_in_group("Player"):
 		print("player hit")
-		get_node("..").resetStage()
+		if(!MyGlobals.powerUpActive):
+			get_node("..").resetStage()
+		else:
+			print("eating ghost")
 		#queue_free()
 	pass # Replace with function body.
 
@@ -85,7 +95,7 @@ func _on_Area2D_body_entered(body):
 func _on_EscapeTimer_timeout():
 	forceMoving = 0
 	pass # Replace with function body.
-
+								
 
 func _on_chasearea1_body_entered(body):
 	if body.is_in_group("Player"):

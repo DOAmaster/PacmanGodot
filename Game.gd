@@ -8,6 +8,7 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	MyGlobals.powerUpActive = 0
 	MyGlobals.score = 0
 	MyGlobals.lifes = 3
 	#set up game over 
@@ -95,7 +96,7 @@ func resetStage():
 		get_node("Player").lastDir = ""
 		
 		#refresh pickUps
-		newStage()
+		#newStage()
 
 func displayLife():
 	get_node("life0").visible = false
@@ -134,6 +135,7 @@ func displayLife():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	get_node("Score/ScoreNumber").text = str(MyGlobals.score)
+	get_node("HighScore/HighScoreNumber").text = str(MyGlobals.score)
 	pass
 
 
@@ -165,7 +167,25 @@ func _on_ReplayButton_pressed():
 	get_tree().change_scene("res://Game.tscn")
 	pass # Replace with function body.
 
-
+#resume game when stage is setup
 func _on_PickupTimer_timeout():
 	newStage()
+	pass # Replace with function body.
+
+func setPowerUp():
+	#repositions ghosts
+	#var ghostLoc = get_node("GhostSpawn").position
+	var ghosts = get_tree().get_nodes_in_group("Ghost")
+	for i in ghosts:
+		i.set_modulate(Color(0,0,1))
+	#get_node("GhostSpawn").position
+
+func unsetPowerUp():
+	var ghosts = get_tree().get_nodes_in_group("Ghost")
+	for i in ghosts:
+		i.set_modulate(Color(1,1,1))
+
+func _on_PowerupTimer_timeout():
+	MyGlobals.powerUpActive = 0
+	unsetPowerUp()
 	pass # Replace with function body.

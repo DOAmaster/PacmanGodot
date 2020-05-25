@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://images/Tileset 1.png" type="Texture" id=1]
 [ext_resource path="res://images/endery tileset.png" type="Texture" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Game.gd" type="Script" id=7]
 [ext_resource path="res://Ghost.tscn" type="PackedScene" id=8]
 [ext_resource path="res://astar.gd" type="Script" id=9]
+[ext_resource path="res://powerUp.tscn" type="PackedScene" id=10]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
@@ -111,6 +112,9 @@ font_data = ExtResource( 5 )
 [sub_resource type="RectangleShape2D" id=9]
 extents = Vector2( 221.013, 112.539 )
 
+[sub_resource type="RectangleShape2D" id=13]
+extents = Vector2( 16, 32 )
+
 [sub_resource type="RectangleShape2D" id=10]
 extents = Vector2( 32.1096, 7.94281 )
 
@@ -171,9 +175,8 @@ frames = SubResource( 6 )
 shape = SubResource( 7 )
 
 [node name="Score" type="RichTextLabel" parent="."]
-margin_left = 224.0
 margin_top = -23.0
-margin_right = 540.0
+margin_right = 316.0
 margin_bottom = 14.0
 custom_fonts/normal_font = SubResource( 8 )
 text = "SCORE"
@@ -187,6 +190,28 @@ margin_right = 512.0
 margin_bottom = 37.0
 custom_fonts/normal_font = SubResource( 8 )
 text = "XXXXXXXXX"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HighScore" type="RichTextLabel" parent="."]
+margin_left = 464.0
+margin_top = -23.0
+margin_right = 780.0
+margin_bottom = 14.0
+custom_fonts/normal_font = SubResource( 8 )
+text = "HIGH SCORE"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HighScoreNumber" type="RichTextLabel" parent="HighScore"]
+margin_left = 152.0
+margin_top = -1.0
+margin_right = 272.0
+margin_bottom = 47.0
+custom_fonts/normal_font = SubResource( 8 )
+text = "xxxxxxxxx"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -223,21 +248,53 @@ texture = ExtResource( 3 )
 
 [node name="fruit0" type="Sprite" parent="."]
 self_modulate = Color( 1, 1, 0, 1 )
-position = Vector2( 693, 748 )
+position = Vector2( 725, 748 )
 scale = Vector2( 0.3, 0.3 )
 texture = ExtResource( 3 )
 
 [node name="fruit1" type="Sprite" parent="."]
 self_modulate = Color( 1, 0, 0.0235294, 1 )
-position = Vector2( 669, 748 )
+position = Vector2( 701, 748 )
 scale = Vector2( 0.3, 0.3 )
 texture = ExtResource( 3 )
 
 [node name="fruit2" type="Sprite" parent="."]
 self_modulate = Color( 0.0313726, 0, 1, 1 )
-position = Vector2( 645, 748 )
+position = Vector2( 677, 748 )
 scale = Vector2( 0.3, 0.3 )
 texture = ExtResource( 3 )
+
+[node name="fruit3" type="Sprite" parent="."]
+self_modulate = Color( 1, 0, 0.235294, 1 )
+position = Vector2( 653, 748 )
+scale = Vector2( 0.3, 0.3 )
+texture = ExtResource( 3 )
+
+[node name="fruit4" type="Sprite" parent="."]
+self_modulate = Color( 1, 0.984314, 0, 1 )
+position = Vector2( 629, 748 )
+scale = Vector2( 0.3, 0.3 )
+texture = ExtResource( 3 )
+
+[node name="fruit5" type="Sprite" parent="."]
+self_modulate = Color( 1, 0.4, 0, 1 )
+position = Vector2( 605, 748 )
+scale = Vector2( 0.3, 0.3 )
+texture = ExtResource( 3 )
+
+[node name="fruit6" type="Sprite" parent="."]
+self_modulate = Color( 0, 1, 0.741176, 1 )
+position = Vector2( 581, 748 )
+scale = Vector2( 0.3, 0.3 )
+texture = ExtResource( 3 )
+
+[node name="leftTeleportSpot" type="Position2D" parent="."]
+position = Vector2( 32, 336 )
+scale = Vector2( 0.5, 0.5 )
+
+[node name="rightTeleportSpot" type="Position2D" parent="."]
+position = Vector2( 704, 336 )
+scale = Vector2( 0.5, 0.5 )
 
 [node name="GhostCage" type="Area2D" parent="."]
 position = Vector2( 368, 344 )
@@ -246,6 +303,22 @@ scale = Vector2( 0.5, 0.5 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GhostCage"]
 position = Vector2( 0, 18 )
 shape = SubResource( 9 )
+
+[node name="leftTeleport" type="Area2D" parent="."]
+position = Vector2( 16, 336 )
+scale = Vector2( 0.5, 0.5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="leftTeleport"]
+position = Vector2( -16, 0 )
+shape = SubResource( 13 )
+
+[node name="rightTeleport" type="Area2D" parent="."]
+position = Vector2( 736, 336 )
+scale = Vector2( 0.5, 0.5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="rightTeleport"]
+position = Vector2( -16, 0 )
+shape = SubResource( 13 )
 
 [node name="GhostGate" type="Area2D" parent="."]
 position = Vector2( 368, 291 )
@@ -260,8 +333,290 @@ one_way_collision = true
 [node name="pickUp" parent="." instance=ExtResource( 6 )]
 position = Vector2( 176, 498 )
 
+[node name="pickUp95" parent="." instance=ExtResource( 6 )]
+position = Vector2( 176, 466 )
+
+[node name="pickUp96" parent="." instance=ExtResource( 6 )]
+position = Vector2( 560, 466 )
+
+[node name="pickUp98" parent="." instance=ExtResource( 6 )]
+position = Vector2( 176, 434 )
+
+[node name="pickUp97" parent="." instance=ExtResource( 6 )]
+position = Vector2( 560, 434 )
+
+[node name="pickUp100" parent="." instance=ExtResource( 6 )]
+position = Vector2( 176, 402 )
+
+[node name="pickUp99" parent="." instance=ExtResource( 6 )]
+position = Vector2( 560, 402 )
+
+[node name="pickUp102" parent="." instance=ExtResource( 6 )]
+position = Vector2( 176, 370 )
+
+[node name="pickUp101" parent="." instance=ExtResource( 6 )]
+position = Vector2( 560, 370 )
+
+[node name="pickUp104" parent="." instance=ExtResource( 6 )]
+position = Vector2( 176, 338 )
+
+[node name="pickUp103" parent="." instance=ExtResource( 6 )]
+position = Vector2( 560, 338 )
+
+[node name="pickUp106" parent="." instance=ExtResource( 6 )]
+position = Vector2( 176, 306 )
+
+[node name="pickUp105" parent="." instance=ExtResource( 6 )]
+position = Vector2( 560, 306 )
+
+[node name="pickUp108" parent="." instance=ExtResource( 6 )]
+position = Vector2( 176, 274 )
+
+[node name="pickUp107" parent="." instance=ExtResource( 6 )]
+position = Vector2( 560, 274 )
+
+[node name="pickUp110" parent="." instance=ExtResource( 6 )]
+position = Vector2( 176, 242 )
+
+[node name="pickUp109" parent="." instance=ExtResource( 6 )]
+position = Vector2( 560, 242 )
+
+[node name="pickUp112" parent="." instance=ExtResource( 6 )]
+position = Vector2( 176, 210 )
+
+[node name="pickUp152" parent="." instance=ExtResource( 6 )]
+position = Vector2( 176, 146 )
+
+[node name="pickUp161" parent="." instance=ExtResource( 6 )]
+position = Vector2( 176, 114 )
+
+[node name="pickUp167" parent="." instance=ExtResource( 6 )]
+position = Vector2( 176, 82 )
+
+[node name="pickUp173" parent="." instance=ExtResource( 6 )]
+position = Vector2( 176, 50 )
+
+[node name="pickUp153" parent="." instance=ExtResource( 6 )]
+position = Vector2( 208, 146 )
+
+[node name="pickUp186" parent="." instance=ExtResource( 6 )]
+position = Vector2( 208, 50 )
+
+[node name="pickUp134" parent="." instance=ExtResource( 6 )]
+position = Vector2( 176, 178 )
+
+[node name="pickUp113" parent="." instance=ExtResource( 6 )]
+position = Vector2( 144, 210 )
+
+[node name="pickUp114" parent="." instance=ExtResource( 6 )]
+position = Vector2( 112, 210 )
+
+[node name="pickUp115" parent="." instance=ExtResource( 6 )]
+position = Vector2( 80, 210 )
+
+[node name="pickUp116" parent="." instance=ExtResource( 6 )]
+position = Vector2( 48, 210 )
+
+[node name="pickUp151" parent="." instance=ExtResource( 6 )]
+position = Vector2( 144, 146 )
+
+[node name="pickUp187" parent="." instance=ExtResource( 6 )]
+position = Vector2( 144, 50 )
+
+[node name="pickUp150" parent="." instance=ExtResource( 6 )]
+position = Vector2( 112, 146 )
+
+[node name="pickUp149" parent="." instance=ExtResource( 6 )]
+position = Vector2( 80, 146 )
+
+[node name="pickUp185" parent="." instance=ExtResource( 6 )]
+position = Vector2( 112, 50 )
+
+[node name="pickUp184" parent="." instance=ExtResource( 6 )]
+position = Vector2( 80, 50 )
+
+[node name="pickUp148" parent="." instance=ExtResource( 6 )]
+position = Vector2( 48, 146 )
+
+[node name="pickUp160" parent="." instance=ExtResource( 6 )]
+position = Vector2( 48, 114 )
+
+[node name="pickUp172" parent="." instance=ExtResource( 6 )]
+position = Vector2( 48, 50 )
+
+[node name="pickUp133" parent="." instance=ExtResource( 6 )]
+position = Vector2( 48, 178 )
+
+[node name="pickUp120" parent="." instance=ExtResource( 6 )]
+position = Vector2( 336, 210 )
+
+[node name="pickUp119" parent="." instance=ExtResource( 6 )]
+position = Vector2( 304, 210 )
+
+[node name="pickUp118" parent="." instance=ExtResource( 6 )]
+position = Vector2( 272, 210 )
+
+[node name="pickUp117" parent="." instance=ExtResource( 6 )]
+position = Vector2( 240, 210 )
+
+[node name="pickUp124" parent="." instance=ExtResource( 6 )]
+position = Vector2( 496, 210 )
+
+[node name="pickUp147" parent="." instance=ExtResource( 6 )]
+position = Vector2( 336, 146 )
+
+[node name="pickUp159" parent="." instance=ExtResource( 6 )]
+position = Vector2( 336, 114 )
+
+[node name="pickUp165" parent="." instance=ExtResource( 6 )]
+position = Vector2( 336, 82 )
+
+[node name="pickUp171" parent="." instance=ExtResource( 6 )]
+position = Vector2( 336, 50 )
+
+[node name="pickUp154" parent="." instance=ExtResource( 6 )]
+position = Vector2( 368, 146 )
+
+[node name="pickUp146" parent="." instance=ExtResource( 6 )]
+position = Vector2( 304, 146 )
+
+[node name="pickUp145" parent="." instance=ExtResource( 6 )]
+position = Vector2( 272, 146 )
+
+[node name="pickUp144" parent="." instance=ExtResource( 6 )]
+position = Vector2( 240, 146 )
+
+[node name="pickUp143" parent="." instance=ExtResource( 6 )]
+position = Vector2( 496, 146 )
+
+[node name="pickUp155" parent="." instance=ExtResource( 6 )]
+position = Vector2( 528, 146 )
+
+[node name="pickUp183" parent="." instance=ExtResource( 6 )]
+position = Vector2( 304, 50 )
+
+[node name="pickUp182" parent="." instance=ExtResource( 6 )]
+position = Vector2( 272, 50 )
+
+[node name="pickUp181" parent="." instance=ExtResource( 6 )]
+position = Vector2( 240, 50 )
+
+[node name="pickUp180" parent="." instance=ExtResource( 6 )]
+position = Vector2( 496, 50 )
+
+[node name="pickUp179" parent="." instance=ExtResource( 6 )]
+position = Vector2( 528, 50 )
+
+[node name="pickUp132" parent="." instance=ExtResource( 6 )]
+position = Vector2( 240, 178 )
+
+[node name="pickUp131" parent="." instance=ExtResource( 6 )]
+position = Vector2( 496, 178 )
+
+[node name="pickUp123" parent="." instance=ExtResource( 6 )]
+position = Vector2( 464, 210 )
+
+[node name="pickUp122" parent="." instance=ExtResource( 6 )]
+position = Vector2( 432, 210 )
+
+[node name="pickUp121" parent="." instance=ExtResource( 6 )]
+position = Vector2( 400, 210 )
+
+[node name="pickUp128" parent="." instance=ExtResource( 6 )]
+position = Vector2( 688, 210 )
+
+[node name="pickUp142" parent="." instance=ExtResource( 6 )]
+position = Vector2( 464, 146 )
+
+[node name="pickUp141" parent="." instance=ExtResource( 6 )]
+position = Vector2( 432, 146 )
+
+[node name="pickUp178" parent="." instance=ExtResource( 6 )]
+position = Vector2( 464, 50 )
+
+[node name="pickUp177" parent="." instance=ExtResource( 6 )]
+position = Vector2( 432, 50 )
+
+[node name="pickUp140" parent="." instance=ExtResource( 6 )]
+position = Vector2( 400, 146 )
+
+[node name="pickUp139" parent="." instance=ExtResource( 6 )]
+position = Vector2( 688, 146 )
+
+[node name="pickUp158" parent="." instance=ExtResource( 6 )]
+position = Vector2( 400, 114 )
+
+[node name="pickUp157" parent="." instance=ExtResource( 6 )]
+position = Vector2( 688, 114 )
+
+[node name="pickUp164" parent="." instance=ExtResource( 6 )]
+position = Vector2( 400, 82 )
+
+[node name="pickUp170" parent="." instance=ExtResource( 6 )]
+position = Vector2( 400, 50 )
+
+[node name="pickUp169" parent="." instance=ExtResource( 6 )]
+position = Vector2( 688, 50 )
+
+[node name="pickUp130" parent="." instance=ExtResource( 6 )]
+position = Vector2( 688, 178 )
+
+[node name="pickUp127" parent="." instance=ExtResource( 6 )]
+position = Vector2( 656, 210 )
+
+[node name="pickUp126" parent="." instance=ExtResource( 6 )]
+position = Vector2( 624, 210 )
+
+[node name="pickUp125" parent="." instance=ExtResource( 6 )]
+position = Vector2( 592, 210 )
+
+[node name="pickUp111" parent="." instance=ExtResource( 6 )]
+position = Vector2( 560, 210 )
+
+[node name="pickUp138" parent="." instance=ExtResource( 6 )]
+position = Vector2( 656, 146 )
+
+[node name="pickUp137" parent="." instance=ExtResource( 6 )]
+position = Vector2( 624, 146 )
+
+[node name="pickUp136" parent="." instance=ExtResource( 6 )]
+position = Vector2( 592, 146 )
+
+[node name="pickUp176" parent="." instance=ExtResource( 6 )]
+position = Vector2( 656, 50 )
+
+[node name="pickUp175" parent="." instance=ExtResource( 6 )]
+position = Vector2( 624, 50 )
+
+[node name="pickUp174" parent="." instance=ExtResource( 6 )]
+position = Vector2( 592, 50 )
+
+[node name="pickUp135" parent="." instance=ExtResource( 6 )]
+position = Vector2( 560, 146 )
+
+[node name="pickUp156" parent="." instance=ExtResource( 6 )]
+position = Vector2( 560, 114 )
+
+[node name="pickUp162" parent="." instance=ExtResource( 6 )]
+position = Vector2( 560, 82 )
+
+[node name="pickUp168" parent="." instance=ExtResource( 6 )]
+position = Vector2( 560, 50 )
+
+[node name="pickUp129" parent="." instance=ExtResource( 6 )]
+position = Vector2( 560, 178 )
+
+[node name="pickUp93" parent="." instance=ExtResource( 6 )]
+position = Vector2( 176, 690 )
+
+[node name="pickUp69" parent="." instance=ExtResource( 6 )]
+position = Vector2( 176, 626 )
+
 [node name="pickUp44" parent="." instance=ExtResource( 6 )]
 position = Vector2( 176, 562 )
+
+[node name="pickUp51" parent="." instance=ExtResource( 6 )]
+position = Vector2( 176, 594 )
 
 [node name="pickUp26" parent="." instance=ExtResource( 6 )]
 position = Vector2( 176, 530 )
@@ -281,8 +636,47 @@ position = Vector2( 304, 498 )
 [node name="pickUp10" parent="." instance=ExtResource( 6 )]
 position = Vector2( 336, 498 )
 
+[node name="pickUp92" parent="." instance=ExtResource( 6 )]
+position = Vector2( 144, 690 )
+
+[node name="pickUp91" parent="." instance=ExtResource( 6 )]
+position = Vector2( 112, 690 )
+
+[node name="pickUp90" parent="." instance=ExtResource( 6 )]
+position = Vector2( 80, 690 )
+
+[node name="pickUp89" parent="." instance=ExtResource( 6 )]
+position = Vector2( 304, 690 )
+
+[node name="pickUp88" parent="." instance=ExtResource( 6 )]
+position = Vector2( 336, 690 )
+
+[node name="pickUp94" parent="." instance=ExtResource( 6 )]
+position = Vector2( 368, 690 )
+
+[node name="pickUp68" parent="." instance=ExtResource( 6 )]
+position = Vector2( 144, 626 )
+
+[node name="pickUp67" parent="." instance=ExtResource( 6 )]
+position = Vector2( 112, 626 )
+
+[node name="pickUp66" parent="." instance=ExtResource( 6 )]
+position = Vector2( 80, 626 )
+
+[node name="pickUp65" parent="." instance=ExtResource( 6 )]
+position = Vector2( 304, 626 )
+
+[node name="pickUp64" parent="." instance=ExtResource( 6 )]
+position = Vector2( 336, 626 )
+
+[node name="pickUp73" parent="." instance=ExtResource( 6 )]
+position = Vector2( 336, 658 )
+
 [node name="pickUp43" parent="." instance=ExtResource( 6 )]
 position = Vector2( 112, 562 )
+
+[node name="pickUp50" parent="." instance=ExtResource( 6 )]
+position = Vector2( 112, 594 )
 
 [node name="pickUp42" parent="." instance=ExtResource( 6 )]
 position = Vector2( 80, 562 )
@@ -305,11 +699,35 @@ position = Vector2( 272, 498 )
 [node name="pickUp7" parent="." instance=ExtResource( 6 )]
 position = Vector2( 240, 498 )
 
+[node name="pickUp87" parent="." instance=ExtResource( 6 )]
+position = Vector2( 272, 690 )
+
+[node name="pickUp86" parent="." instance=ExtResource( 6 )]
+position = Vector2( 240, 690 )
+
+[node name="pickUp63" parent="." instance=ExtResource( 6 )]
+position = Vector2( 272, 626 )
+
+[node name="pickUp62" parent="." instance=ExtResource( 6 )]
+position = Vector2( 240, 626 )
+
 [node name="pickUp6" parent="." instance=ExtResource( 6 )]
 position = Vector2( 208, 498 )
 
 [node name="pickUp5" parent="." instance=ExtResource( 6 )]
 position = Vector2( 48, 498 )
+
+[node name="pickUp85" parent="." instance=ExtResource( 6 )]
+position = Vector2( 208, 690 )
+
+[node name="pickUp84" parent="." instance=ExtResource( 6 )]
+position = Vector2( 48, 690 )
+
+[node name="pickUp61" parent="." instance=ExtResource( 6 )]
+position = Vector2( 48, 626 )
+
+[node name="pickUp72" parent="." instance=ExtResource( 6 )]
+position = Vector2( 48, 658 )
 
 [node name="pickUp39" parent="." instance=ExtResource( 6 )]
 position = Vector2( 272, 562 )
@@ -317,11 +735,11 @@ position = Vector2( 272, 562 )
 [node name="pickUp38" parent="." instance=ExtResource( 6 )]
 position = Vector2( 240, 562 )
 
+[node name="pickUp49" parent="." instance=ExtResource( 6 )]
+position = Vector2( 240, 594 )
+
 [node name="pickUp37" parent="." instance=ExtResource( 6 )]
 position = Vector2( 208, 562 )
-
-[node name="pickUp36" parent="." instance=ExtResource( 6 )]
-position = Vector2( 48, 562 )
 
 [node name="pickUp24" parent="." instance=ExtResource( 6 )]
 position = Vector2( 48, 530 )
@@ -344,11 +762,50 @@ position = Vector2( 656, 498 )
 [node name="pickUp15" parent="." instance=ExtResource( 6 )]
 position = Vector2( 688, 498 )
 
+[node name="pickUp83" parent="." instance=ExtResource( 6 )]
+position = Vector2( 528, 690 )
+
+[node name="pickUp82" parent="." instance=ExtResource( 6 )]
+position = Vector2( 496, 690 )
+
+[node name="pickUp81" parent="." instance=ExtResource( 6 )]
+position = Vector2( 464, 690 )
+
+[node name="pickUp80" parent="." instance=ExtResource( 6 )]
+position = Vector2( 432, 690 )
+
+[node name="pickUp79" parent="." instance=ExtResource( 6 )]
+position = Vector2( 656, 690 )
+
+[node name="pickUp78" parent="." instance=ExtResource( 6 )]
+position = Vector2( 688, 690 )
+
+[node name="pickUp60" parent="." instance=ExtResource( 6 )]
+position = Vector2( 496, 626 )
+
+[node name="pickUp59" parent="." instance=ExtResource( 6 )]
+position = Vector2( 464, 626 )
+
+[node name="pickUp58" parent="." instance=ExtResource( 6 )]
+position = Vector2( 432, 626 )
+
+[node name="pickUp57" parent="." instance=ExtResource( 6 )]
+position = Vector2( 656, 626 )
+
+[node name="pickUp56" parent="." instance=ExtResource( 6 )]
+position = Vector2( 688, 626 )
+
+[node name="pickUp71" parent="." instance=ExtResource( 6 )]
+position = Vector2( 688, 658 )
+
 [node name="pickUp35" parent="." instance=ExtResource( 6 )]
 position = Vector2( 528, 562 )
 
 [node name="pickUp34" parent="." instance=ExtResource( 6 )]
 position = Vector2( 496, 562 )
+
+[node name="pickUp48" parent="." instance=ExtResource( 6 )]
+position = Vector2( 496, 594 )
 
 [node name="pickUp33" parent="." instance=ExtResource( 6 )]
 position = Vector2( 464, 562 )
@@ -359,17 +816,23 @@ position = Vector2( 432, 562 )
 [node name="pickUp31" parent="." instance=ExtResource( 6 )]
 position = Vector2( 656, 562 )
 
-[node name="pickUp30" parent="." instance=ExtResource( 6 )]
-position = Vector2( 688, 562 )
-
 [node name="pickUp23" parent="." instance=ExtResource( 6 )]
 position = Vector2( 688, 530 )
 
 [node name="pickUp14" parent="." instance=ExtResource( 6 )]
 position = Vector2( 624, 498 )
 
+[node name="pickUp77" parent="." instance=ExtResource( 6 )]
+position = Vector2( 624, 690 )
+
+[node name="pickUp55" parent="." instance=ExtResource( 6 )]
+position = Vector2( 624, 626 )
+
 [node name="pickUp29" parent="." instance=ExtResource( 6 )]
 position = Vector2( 624, 562 )
+
+[node name="pickUp47" parent="." instance=ExtResource( 6 )]
+position = Vector2( 624, 594 )
 
 [node name="pickUp13" parent="." instance=ExtResource( 6 )]
 position = Vector2( 592, 498 )
@@ -380,8 +843,32 @@ position = Vector2( 560, 498 )
 [node name="pickUp11" parent="." instance=ExtResource( 6 )]
 position = Vector2( 400, 498 )
 
+[node name="pickUp76" parent="." instance=ExtResource( 6 )]
+position = Vector2( 592, 690 )
+
+[node name="pickUp75" parent="." instance=ExtResource( 6 )]
+position = Vector2( 560, 690 )
+
+[node name="pickUp74" parent="." instance=ExtResource( 6 )]
+position = Vector2( 400, 690 )
+
+[node name="pickUp54" parent="." instance=ExtResource( 6 )]
+position = Vector2( 592, 626 )
+
+[node name="pickUp53" parent="." instance=ExtResource( 6 )]
+position = Vector2( 560, 626 )
+
+[node name="pickUp52" parent="." instance=ExtResource( 6 )]
+position = Vector2( 400, 626 )
+
+[node name="pickUp70" parent="." instance=ExtResource( 6 )]
+position = Vector2( 400, 658 )
+
 [node name="pickUp28" parent="." instance=ExtResource( 6 )]
 position = Vector2( 560, 562 )
+
+[node name="pickUp46" parent="." instance=ExtResource( 6 )]
+position = Vector2( 560, 594 )
 
 [node name="pickUp27" parent="." instance=ExtResource( 6 )]
 position = Vector2( 400, 562 )
@@ -433,7 +920,29 @@ margin_right = 231.0
 margin_bottom = 160.0
 custom_fonts/font = SubResource( 12 )
 text = "REPLAY"
+
+[node name="PickupTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="powerUp1" parent="." instance=ExtResource( 10 )]
+position = Vector2( 48, 562 )
+
+[node name="powerUp2" parent="." instance=ExtResource( 10 )]
+position = Vector2( 688, 562 )
+
+[node name="powerUp3" parent="." instance=ExtResource( 10 )]
+position = Vector2( 688, 82 )
+
+[node name="powerUp4" parent="." instance=ExtResource( 10 )]
+position = Vector2( 48, 82 )
+
+[node name="PowerupTimer" type="Timer" parent="."]
+wait_time = 6.0
+one_shot = true
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
 [connection signal="body_entered" from="GhostCage" to="." method="_on_GhostCage_body_entered"]
 [connection signal="body_exited" from="GhostCage" to="." method="_on_GhostCage_body_exited"]
 [connection signal="pressed" from="GameOverText/ReplayButton" to="." method="_on_ReplayButton_pressed"]
+[connection signal="timeout" from="PickupTimer" to="." method="_on_PickupTimer_timeout"]
+[connection signal="timeout" from="PowerupTimer" to="." method="_on_PowerupTimer_timeout"]
