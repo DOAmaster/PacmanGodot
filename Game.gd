@@ -4,7 +4,7 @@ extends Node2D
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-
+var storedScore
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -15,17 +15,47 @@ func _ready():
 	MyGlobals.gameOver = 0
 	get_node("GameOverText").visible = false
 	
+	#save()
+	loadf()
+	MyGlobals.savedHighScore = player.hscore
+	print(MyGlobals.savedHighScore)
+	
+	get_node("HighScore/HighScoreNumber").text = str(MyGlobals.savedHighScore)
+	
 	#displays first score
 	get_node("Score/ScoreNumber").text = str(MyGlobals.score)
 	
 	#displays life
 	displayLife()
 	
-	
-	
 	newStage()
 	
 	pass # Replace with function body.
+
+const FILE_NAME = "user://game-data.json"
+
+var player = {
+	"hscore": 0,
+}
+
+func save():
+	var file = File.new()
+	file.open(FILE_NAME, File.WRITE)
+	file.store_string(to_json(player))
+	file.close()
+
+func loadf():
+	var file = File.new()
+	if file.file_exists(FILE_NAME):
+		file.open(FILE_NAME, File.READ)
+		var data = parse_json(file.get_as_text())
+		file.close()
+		if typeof(data) == TYPE_DICTIONARY:
+			player = data
+		else:
+			printerr("Corrupted data!")
+	else:
+		printerr("No saved data!")
 
 #calls when a pickUp is touched, checks if all pick ups are not visable to win
 func checkWin():
@@ -78,6 +108,14 @@ func resetStage():
 		MyGlobals.gameOver = 1
 		get_node("GameOverText").visible = true
 		get_node("GameOverText/ReplayButton").grab_focus()
+		
+		if(MyGlobals.score > MyGlobals.savedHighScore):
+			print("New high score!")
+			player.hscore = MyGlobals.score
+			save()
+		else:
+			print("No high score.")
+		
 	else:
 		MyGlobals.lifes = tempLife
 		displayLife()
@@ -132,10 +170,31 @@ func displayLife():
 			get_node("life3").visible = true
 			get_node("life4").visible = true
 
+var extralifeReward1 = 0
+var extralifeReward2 = 0
+var extralifeReward3 = 0
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if(MyGlobals.score >= 10000 && MyGlobals.score < 15000 && extralifeReward1 == 0):
+		extralifeReward1 = 1
+		var tempLife = MyGlobals.lifes + 1
+		MyGlobals.lifes = tempLife
+		displayLife()
+		print("rewarding first 1up")
+	elif(MyGlobals.score >= 15000 && MyGlobals.score < 20000 && extralifeReward2 == 0):
+		extralifeReward2 = 1
+		var tempLife = MyGlobals.lifes + 1
+		MyGlobals.lifes = tempLife
+		displayLife()
+		print("rewarding second 1up")
+	elif(MyGlobals.score >= 20000 && extralifeReward3 == 0):
+		extralifeReward3 = 1
+		var tempLife = MyGlobals.lifes + 1
+		MyGlobals.lifes = tempLife
+		displayLife()
+		print("rewarding second 1up")
 	get_node("Score/ScoreNumber").text = str(MyGlobals.score)
-	get_node("HighScore/HighScoreNumber").text = str(MyGlobals.score)
+	#get_node("HighScore/HighScoreNumber").text = str(MyGlobals.score)
 	pass
 
 
@@ -187,5 +246,22 @@ func unsetPowerUp():
 
 func _on_PowerupTimer_timeout():
 	MyGlobals.powerUpActive = 0
+	MyGlobals.eatCombo = 0
 	unsetPowerUp()
+	pass # Replace with function body.
+
+
+func _on_leftTeleport_body_entered(body):
+	#reposition Player
+	if body.is_in_group("Ghost") || body.is_in_group("Player"):
+		var rightLoc = get_node("rightTeleportSpot").position
+		body.position = rightLoc
+	#get_node("Player").lastDir = ""
+	pass # Replace with function body.
+
+
+func _on_rightTeleport_body_entered(body):
+	if body.is_in_group("Ghost") || body.is_in_group("Player"):
+		var leftLoc = get_node("leftTeleportSpot").position
+		body.position = leftLoc
 	pass # Replace with function body.

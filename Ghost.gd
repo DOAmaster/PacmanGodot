@@ -75,9 +75,14 @@ func _physics_process(delta):
 	#make ghost focus player position, TODO wall check
 	if(chasing && !isCaged):
 		if(!MyGlobals.powerUpActive):
-			velocity = velocity.normalized() * speed
+			velocity = position.direction_to(player.position) * speed
 		else:
-			velocity = velocity.normalized() * slowSpeed
+			velocity = position.direction_to(player.position) * slowSpeed
+	if(chasing && MyGlobals.powerUpActive):
+		if(!MyGlobals.powerUpActive):
+			velocity = position.direction_to(player.position) * -speed
+		else:
+			velocity = position.direction_to(player.position) * -slowSpeed
 	velocity = move_and_slide(velocity)
 
 
@@ -88,6 +93,13 @@ func _on_Area2D_body_entered(body):
 			get_node("..").resetStage()
 		else:
 			print("eating ghost")
+			var tempCombo = MyGlobals.eatCombo
+			MyGlobals.eatCombo = tempCombo + 1
+			var spawnPoint = get_parent().get_node("GhostSpawn").position
+			self.position = spawnPoint
+			var tempScore = MyGlobals.score + (200 * MyGlobals.eatCombo)
+			MyGlobals.score = tempScore
+			
 		#queue_free()
 	pass # Replace with function body.
 
@@ -95,7 +107,6 @@ func _on_Area2D_body_entered(body):
 func _on_EscapeTimer_timeout():
 	forceMoving = 0
 	pass # Replace with function body.
-								
 
 func _on_chasearea1_body_entered(body):
 	if body.is_in_group("Player"):
