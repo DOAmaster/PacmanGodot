@@ -14,10 +14,12 @@ func get_input():
 			isMoving = 1
 			lastDir = "right"
 			velocity.x += 1
+			$AnimatedSprite.flip_h = false
 		if (Input.is_action_pressed('ui_left') || (isMoving && lastDir == "left")):
 			isMoving = 1
 			lastDir = "left"
 			velocity.x -= 1
+			$AnimatedSprite.flip_h = true
 		if (Input.is_action_pressed('ui_down') || (isMoving && lastDir == "down")):
 			isMoving = 1
 			lastDir = "down"
