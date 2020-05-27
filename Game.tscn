@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://images/Tileset 1.png" type="Texture" id=1]
 [ext_resource path="res://images/endery tileset.png" type="Texture" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Ghost.tscn" type="PackedScene" id=8]
 [ext_resource path="res://astar.gd" type="Script" id=9]
 [ext_resource path="res://powerUp.tscn" type="PackedScene" id=10]
+[ext_resource path="res://fruitPickup.tscn" type="PackedScene" id=11]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
@@ -105,8 +106,8 @@ animations = [ {
 } ]
 
 [sub_resource type="CapsuleShape2D" id=8]
-radius = 30.5028
-height = 1.29517
+radius = 31.669
+height = 0.07
 
 [sub_resource type="DynamicFont" id=9]
 size = 21
@@ -889,6 +890,21 @@ position = Vector2( 560, 530 )
 [node name="pickUp21" parent="." instance=ExtResource( 6 )]
 position = Vector2( 400, 530 )
 
+[node name="powerUp1" parent="." instance=ExtResource( 10 )]
+position = Vector2( 48, 562 )
+
+[node name="powerUp2" parent="." instance=ExtResource( 10 )]
+position = Vector2( 688, 562 )
+
+[node name="powerUp3" parent="." instance=ExtResource( 10 )]
+position = Vector2( 688, 82 )
+
+[node name="powerUp4" parent="." instance=ExtResource( 10 )]
+position = Vector2( 48, 82 )
+
+[node name="fruitPickUp" parent="." instance=ExtResource( 11 )]
+position = Vector2( 368, 432 )
+
 [node name="Ghost" parent="." instance=ExtResource( 8 )]
 position = Vector2( 368, 272 )
 collision_mask = 0
@@ -938,18 +954,6 @@ text = "REPLAY"
 [node name="PickupTimer" type="Timer" parent="."]
 wait_time = 0.1
 one_shot = true
-
-[node name="powerUp1" parent="." instance=ExtResource( 10 )]
-position = Vector2( 48, 562 )
-
-[node name="powerUp2" parent="." instance=ExtResource( 10 )]
-position = Vector2( 688, 562 )
-
-[node name="powerUp3" parent="." instance=ExtResource( 10 )]
-position = Vector2( 688, 82 )
-
-[node name="powerUp4" parent="." instance=ExtResource( 10 )]
-position = Vector2( 48, 82 )
 
 [node name="PowerupTimer" type="Timer" parent="."]
 wait_time = 6.0

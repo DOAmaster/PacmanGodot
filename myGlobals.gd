@@ -12,7 +12,7 @@ var lifes = 3
 var level = 1
 var powerUpActive = 0
 var eatCombo = 0
-
+var pickupCount = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

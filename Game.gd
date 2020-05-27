@@ -6,14 +6,31 @@ extends Node2D
 # var b = "text"
 var storedScore
 
+const FILE_NAME = "user://game-data.json"
+
+var player = {
+	"hscore": 0,
+}
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	fruitSpawned = 0
 	MyGlobals.powerUpActive = 0
+	MyGlobals.pickupCount = 0
 	MyGlobals.score = 0
 	MyGlobals.lifes = 3
+	
 	#set up game over 
 	MyGlobals.gameOver = 0
 	get_node("GameOverText").visible = false
+	#hide fruit until spawned
+	var pickUps = get_tree().get_nodes_in_group("fruit")
+	for i in pickUps:
+		i.visible = true
+		i.get_node("Area2D").set_collision_layer_bit(0,0)
+		i.get_node("Area2D").set_collision_mask_bit(0,0)
+	
 	
 	#save()
 	loadf()
@@ -28,15 +45,23 @@ func _ready():
 	#displays life
 	displayLife()
 	
+	#displays level fruit icon 
+	displayLevel()
+	
 	newStage()
 	
 	pass # Replace with function body.
 
-const FILE_NAME = "user://game-data.json"
+var fruitSpawned = 0
 
-var player = {
-	"hscore": 0,
-}
+func spawnFruit():
+	print("spawning fruit")
+	var pickUps = get_tree().get_nodes_in_group("fruit")
+	for i in pickUps:
+		i.visible = true
+		i.get_node("Sprite").visible = true
+		i.get_node("Area2D").set_collision_layer_bit(0,1)
+		i.get_node("Area2D").set_collision_mask_bit(0,1)
 
 func save():
 	var file = File.new()
@@ -136,6 +161,67 @@ func resetStage():
 		#refresh pickUps
 		#newStage()
 
+func displayLevel():
+	get_node("fruit0").visible = false
+	get_node("fruit1").visible = false
+	get_node("fruit2").visible = false
+	get_node("fruit3").visible = false
+	get_node("fruit4").visible = false
+	get_node("fruit5").visible = false
+	get_node("fruit6").visible = false
+	match MyGlobals.level:
+		0:
+			get_node("fruit0").visible = false
+			get_node("fruit1").visible = false
+			get_node("fruit2").visible = false
+			get_node("fruit3").visible = false
+			get_node("fruit4").visible = false
+			get_node("fruit5").visible = false
+			get_node("fruit6").visible = false
+		1:
+			get_node("fruit0").visible = true
+		2:
+			get_node("fruit0").visible = true
+			get_node("fruit1").visible = true
+		3:
+			get_node("fruit0").visible = true
+			get_node("fruit1").visible = true
+			get_node("fruit2").visible = true
+		4:
+			get_node("fruit0").visible = true
+			get_node("fruit1").visible = true
+			get_node("fruit2").visible = true
+			get_node("fruit3").visible = true
+		5:
+			get_node("fruit0").visible = true
+			get_node("fruit1").visible = true
+			get_node("fruit2").visible = true
+			get_node("fruit3").visible = true
+			get_node("fruit4").visible = true
+		6:
+			get_node("fruit0").visible = true
+			get_node("fruit1").visible = true
+			get_node("fruit2").visible = true
+			get_node("fruit3").visible = true
+			get_node("fruit4").visible = true
+			get_node("fruit5").visible = true
+		7:
+			get_node("fruit0").visible = true
+			get_node("fruit1").visible = true
+			get_node("fruit2").visible = true
+			get_node("fruit3").visible = true
+			get_node("fruit4").visible = true
+			get_node("fruit5").visible = true
+			get_node("fruit6").visible = true
+		_:
+			get_node("fruit0").visible = true
+			get_node("fruit1").visible = true
+			get_node("fruit2").visible = true
+			get_node("fruit3").visible = true
+			get_node("fruit4").visible = true
+			get_node("fruit5").visible = true
+			get_node("fruit6").visible = true
+
 func displayLife():
 	get_node("life0").visible = false
 	get_node("life1").visible = false
@@ -193,6 +279,10 @@ func _process(delta):
 		MyGlobals.lifes = tempLife
 		displayLife()
 		print("rewarding second 1up")
+	if(MyGlobals.pickupCount == 50 && fruitSpawned == 0):
+		fruitSpawned = 1
+		MyGlobals.pickupCount = 0
+		spawnFruit()
 	get_node("Score/ScoreNumber").text = str(MyGlobals.score)
 	#get_node("HighScore/HighScoreNumber").text = str(MyGlobals.score)
 	pass

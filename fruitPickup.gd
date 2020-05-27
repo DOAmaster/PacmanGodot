@@ -18,17 +18,28 @@ func _ready():
 
 func _on_Area2D_body_entered(body):
 	if body.is_in_group("Player"):
-		#print("pickup")
-		var tempScore = MyGlobals.score + 10
+		print("fruit picked up")
+		var tempScore
+		match MyGlobals.level:
+			1:
+				tempScore = MyGlobals.score + 100
+			2:
+				tempScore = MyGlobals.score + 300
+			3:
+				tempScore = MyGlobals.score + 500
+			4:
+				tempScore = MyGlobals.score + 700
+			5:
+				tempScore = MyGlobals.score + 1000
+			6:
+				tempScore = MyGlobals.score + 2000
+			7:
+				tempScore = MyGlobals.score + 3000
+			_:
+				tempScore = MyGlobals.score + 3000
 		MyGlobals.score = tempScore
-		var tempCount = MyGlobals.pickupCount + 1
-		MyGlobals.pickupCount = tempCount
 		self.visible = false
 		$Area2D.set_collision_layer_bit(0,0)
 		$Area2D.set_collision_mask_bit(0,0)
 		
-		#body.set_collision_mask_bit(0,0)
-		#body.set_collision_layer_bit(0,0)
-		get_parent().checkWin()
-		#queue_free()
 	pass # Replace with function body.
