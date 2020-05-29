@@ -15,9 +15,9 @@ _global_script_class_icons={
 
 [application]
 
-config/name="jampac"
-run/main_scene="res://Game.tscn"
-config/icon="res://icon.png"
+config/name="Pac Godot"
+run/main_scene="res://Title.tscn"
+config/icon="res://images/player2.png"
 
 [autoload]
 
@@ -25,6 +25,7 @@ MyGlobals="*res://myGlobals.gd"
 
 [display]
 
+window/size/width=600
 window/size/resizable=false
 window/stretch/mode="2d"
 window/stretch/aspect="keep"

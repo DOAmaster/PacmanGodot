@@ -87,10 +87,11 @@ func _physics_process(delta):
 
 
 func _on_Area2D_body_entered(body):
-	if body.is_in_group("Player"):
+	if body.is_in_group("Player") && MyGlobals.gameOver == 0:
 		print("player hit")
 		if(!MyGlobals.powerUpActive):
 			get_node("..").resetStage()
+			get_parent().get_node("deathSound").play()
 		else:
 			print("eating ghost")
 			var tempCombo = MyGlobals.eatCombo
@@ -99,6 +100,8 @@ func _on_Area2D_body_entered(body):
 			self.position = spawnPoint
 			var tempScore = MyGlobals.score + (200 * MyGlobals.eatCombo)
 			MyGlobals.score = tempScore
+			
+			get_parent().get_node("ghostSound").play()
 			
 		#queue_free()
 	pass # Replace with function body.

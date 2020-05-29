@@ -19,7 +19,7 @@ func _ready():
 func _on_Area2D_body_entered(body):
 	if body.is_in_group("Player"):
 		#print("pickup")
-		var tempScore = MyGlobals.score + 10
+		var tempScore = MyGlobals.score + 50
 		MyGlobals.score = tempScore
 		self.visible = false
 		$Area2D.set_collision_layer_bit(0,0)
@@ -32,6 +32,8 @@ func _on_Area2D_body_entered(body):
 		MyGlobals.powerUpActive = 1
 		get_parent().setPowerUp()
 		get_parent().get_node("PowerupTimer").start()
+		
+		get_parent().get_node("ghostSound").play()
 		
 		#queue_free()
 	pass # Replace with function body.

@@ -42,4 +42,6 @@ func _on_Area2D_body_entered(body):
 		$Area2D.set_collision_layer_bit(0,0)
 		$Area2D.set_collision_mask_bit(0,0)
 		
+		get_parent().get_node("fruitSound").play()
+		
 	pass # Replace with function body.
